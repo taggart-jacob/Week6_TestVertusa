@@ -4,12 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#000000"
     tools:context=".ActivitySAT">
 
     <TextView
+        android:id="@+id/tvSchoolName2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25sp"
+        android:textColor="#1D37FC"
         android:layout_margin="8dp"
         app:layout_constraintBottom_toTopOf="@+id/tvSATAverage"
         android:textAlignment="center"/>
@@ -20,6 +23,7 @@
         android:layout_height="wrap_content"
         android:textSize="22sp"
         android:layout_margin="5dp"
+        android:textColor="#01BD04"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:textAlignment="center" />
@@ -29,8 +33,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        android:textColor="#01BD04"
         android:textSize="22sp"
         app:layout_constraintTop_toBottomOf="@+id/tvSATAverage"
         android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/tvSATReadingAverage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:textColor="#01BD04"
+        android:textSize="22sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvSATWritingAverage"
+        android:textAlignment="center"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

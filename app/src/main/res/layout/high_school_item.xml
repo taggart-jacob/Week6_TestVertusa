@@ -8,6 +8,7 @@
         android:id="@+id/tvSchoolName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="#01BD04"
         android:textSize="20sp"
         android:layout_margin="4dp" />
 

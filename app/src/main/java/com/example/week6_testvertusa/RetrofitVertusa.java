@@ -31,7 +31,13 @@ public class RetrofitVertusa {
     public interface RetrofitApiService{
         @GET
         Call<ArrayList<HighSchool>> getHighSchools(@Url String api_url);
+    }
 
+    public RetrofitApiSATService getService(HighSchool highschool){
+        return getRetroFitInstance().create(RetrofitApiSATService.class);
+    }
+
+    public interface RetrofitApiSATService{
         @GET
         Call<ArrayList<SAT>> getSAT(@Url String api_url);
     }

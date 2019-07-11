@@ -20,42 +20,47 @@ public class ActivitySAT extends AppCompatActivity {
     TextView tvSchoolName;
     TextView tvSATMathAverage;
     TextView tvSATWritingAverage;
+    TextView tvSATReadingAverage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sat);
-        tvSchoolName = findViewById(R.id.tvSchoolName);
+        tvSchoolName = findViewById(R.id.tvSchoolName2);
         tvSATMathAverage = findViewById(R.id.tvSATAverage);
         tvSATWritingAverage = findViewById(R.id.tvSATWritingAverage);
+        tvSATReadingAverage = findViewById(R.id.tvSATReadingAverage);
+
         Intent intent = getIntent();
         RetrofitVertusa retrofitVertusa = new RetrofitVertusa();
         HighSchool highSchool = intent.getParcelableExtra("highschool");
+        tvSchoolName.setText(highSchool.getSchoolName());
 
-        retrofitVertusa.getService().getSAT("https://data.cityofnewyork.us/resource/s3k6-pzi2.json").enqueue(new Callback<ArrayList<SAT>>() {
+        retrofitVertusa.getService(highSchool).getSAT("https://data.cityofnewyork.us/resource/f9bf-2cp4.json").enqueue(new Callback<ArrayList<SAT>>() {
             @Override
             public void onResponse(Call<ArrayList<SAT>> call, Response<ArrayList<SAT>> response) {
                 ArrayList<SAT> sats = response.body();
-                Log.d("TAG", sats.get(0).getSatMathAvgScore());
-                ActivitySAT.this.runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        for (int i = 0; i < sats.size(); i++) {
-                            if (sats.get(i).getDbn().equals(highSchool.getDbn())) {
-                                tvSchoolName.setText(highSchool.getSchoolName());
-                                tvSATMathAverage.setText(sats.get(i).getSatMathAvgScore());
-                                tvSATWritingAverage.setText(sats.get(i).getSatWritingAvgScore());
-                                break;
-                            }
+                for (int i = 0; i < sats.size(); i++){
+                    if(sats.get(i).getDbn().equals(highSchool.getDbn())){
+                        tvSATWritingAverage.setText("Writing SAT Average: " + sats.get(i).getSatWritingAvgScore());
+                        tvSATMathAverage.setText("Math SAT Average: " + sats.get(i).getSatMathAvgScore());
+                        tvSATReadingAverage.setText("Reading SAT Average: " + sats.get(i).getSatCriticalReadingAvgScore());
+                        break;
+                    } else{
+                        tvSATWritingAverage.setText("No Writing SAT Results Found");
+                        tvSATMathAverage.setText("No Math SAT Results Found");
+                        tvSATReadingAverage.setText("No Reading SAT Results Found");
                     }
                 }
-                });
             }
+
 
             @Override
             public void onFailure(Call<ArrayList<SAT>> call, Throwable t) {
                 Log.e("TAG", t.getMessage());
             }
+
         });
+
     }
 }
